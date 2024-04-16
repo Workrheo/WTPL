@@ -1,0 +1,101 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}{{title}} - {{settings.name}}{% endblock title %}
+{% block content %}
+<style>
+.icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .green {
+    background-color: green;
+    color: white;
+  }
+  
+  .red {
+    background-color: red;
+    color: white;
+  }
+</style>
+      <div class="container mt-5">
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            {% for field in form %}
+                {% if field.errors %}
+                {{ field.label }}: {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}  
+        <div class="col-sm-12">
+            <div class="row mb-5">
+                <div class="col-sm-12 col-md-12 mb-3">
+                    <div class="card ">
+                        <div class="card-body">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="row mb-3">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="" class="mb-2">Service</label>
+                                        {{form.service}}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="" class="mb-2">Name</label>
+                                        {{form.name}}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="" class="mb-2">Phone</label>
+                                        {{form.phone}}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="" class="mb-2">Email</label>
+                                        {{form.email}}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="" class="mb-2">Address</label>
+                                        {{form.address}}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="" class="mb-2">City</label>
+                                        {{form.city}}
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="" class="mb-2">State</label>
+                                        {{form.state}}
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="" class="mb-2">Postal</label>
+                                        {{form.postal}}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">
+                                            {{form.is_signed}}
+                                            <label for="" class="mb-2">I'm signing this agreement as <b>{{request.user}}</b> and agreed with the <a href="{{a_settings.terms_url}}">Terms & Conditions</a></label>
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Create</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+  </div>
+
+  {% endblock content %}

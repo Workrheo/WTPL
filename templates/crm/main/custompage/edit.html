@@ -1,0 +1,82 @@
+{% extends 'crm/base.html' %}
+{% load static %}
+{% load bootstrap_tags %}
+{% block title %}{{title}} - {{settings.name}}{% endblock title %}
+{% block content %}
+<div class="content-wrapper">
+
+   <!-- Content -->
+   <div class="container-xxl flex-grow-1 container-p-y">
+       <div class="row align-items-center">
+           <div class="col-md-6">
+               <h4 class="fw-bold py-3 mb-4">
+                   <span class="text-muted fw-light">CRM /</span> Edit Page
+               </h4>
+           </div>
+       </div>
+           <!-- Container-fluid starts-->
+           <div class="">
+             {% if form.errors %}
+             <div class="alert alert-danger">
+                 <strong>Error:</strong>
+                 <ul>
+                     {% for field, errors in form.errors.items %}
+                     {% for error in errors %}
+                     <li>{{ field }}: {{ error }}</li>
+                     {% endfor %}
+                     {% endfor %}
+                 </ul>
+             </div>
+         {% endif %} 
+          <!-- Container-fluid starts-->
+          <div class="">
+            <div class="row project-cards">
+              <div class="col-md-12 project-list">
+
+              </div>
+              <div class="">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.media}}                   
+                    <div class="row mb-3">
+                       <div class="col-md-6">
+                          <div class="card">
+                             <div class="card-body">
+                                <label for="{{ form.title.id_for_label }}" class="form-label">Title<span class="text-danger">*</span></label>
+                                {{ form.title }}
+                             </div>
+                          </div>
+                       </div>
+                       <div class="col-md-6">
+                          <div class="card">
+                             <div class="card-body">
+                                <label for="{{ form.slug.id_for_label }}" class="form-label">Slug (Leave it blank)</label>
+                                {{ form.slug|attr:'readonly=readonly' }}
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+     
+                    <div class="row mb-1">
+                       <div class="col-md-12">
+                          <div class="card">
+                             <div class="card-body">
+                                <label for="{{ form.content.id_for_label }}" class="form-label">Page Content<span class="text-danger">*</span></label>
+                                <br>
+                                <div class="form-control ckf" style="">{{ form.content }}</div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <button class="btn btn-primary mb-3" type="submit">Save</button>
+                 </form>
+              
+            </div>
+          </div>
+        </div>
+          <!-- Container-fluid Ends-->
+          
+        </div>
+
+
+{% endblock content %}

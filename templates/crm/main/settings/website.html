@@ -1,0 +1,417 @@
+{% extends 'crm/base.html' %}
+{% load static %}
+{% block title %}{{title}} - {{settings.name}}{% endblock title %}
+{% block content %}
+<style>
+    #cke_id_description {
+        width: 990px !important;
+    }
+.currentImg{
+  width: 187px !important;
+  margin-bottom: 10px;
+}
+img.currentImg2 {
+    width: 55px;
+    margin-bottom: 10px;
+}
+.currentImg3{
+    width: 75px !important;
+    margin-bottom: 10px;
+}
+label.switch {
+    margin-top: -35px;
+}
+@media only screen and (max-width: 600px) {
+  #ver-pills-tab {
+     display: -webkit-box;
+     margin-bottom: 18px;
+ }
+}
+.nav-align-bottom>.tab-content, .nav-align-left>.tab-content, .nav-align-right>.tab-content, .nav-align-top>.tab-content {
+   -ms-flex-negative: 1;
+   background-clip: padding-box;
+   background: transparent;
+   border: none !important;
+   box-shadow: none !important;
+   flex-shrink: 1;
+}
+i.tf-icons {
+   font-size: 18px;
+}
+.switch-toggle-slider{
+   margin-left: -37px;
+   margin-top: 13px;
+
+}
+@media (max-width: 765px) {
+   .switch-toggle-slider {
+       margin-top: -30px;
+   }
+}
+</style>
+
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+
+      <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+          <h4 class="fw-bold py-3 mb-4">
+              <span class="text-muted fw-light">CRM /</span> System Settings
+            </h4>
+
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %} 
+       {% if form.errors %}
+       <div class="alert alert-danger">
+          <strong>Error:</strong>
+          <ul>
+             {% for field, errors in form.errors.items %}
+             {% for error in errors %}
+             <li>{{ field }}: {{ error }}</li>
+             {% endfor %}
+             {% endfor %}
+          </ul>
+       </div>
+       {% endif %}
+
+            <div class="col-xl-12">
+               <div class="nav-align-top mb-4">
+                 <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+                   <li class="nav-item" role="presentation">
+                     <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-general" aria-controls="navs-pills-justified-general" aria-selected="true"><i class="tf-icons bx bx-home me-1"></i> General</button>
+                   </li>
+                   <li class="nav-item" role="presentation">
+                     <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-logos" aria-controls="navs-pills-justified-logos" aria-selected="false" tabindex="-1"><i class="tf-icons bx bx-cube-alt me-1"></i> Logos </button>
+                   </li>
+                   <li class="nav-item" role="presentation">
+                     <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-contact" aria-controls="navs-pills-justified-contact" aria-selected="false" tabindex="-1"><i class="tf-icons bx bx-phone me-1"></i> Contact </button>
+                   </li>
+                   <li class="nav-item" role="presentation">
+                     <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-sms" aria-controls="navs-pills-justified-sms" aria-selected="false" tabindex="-1"><i class="tf-icons bx bx-message-square-dots me-1"></i> SMS</button>
+                   </li>
+                   <li class="nav-item" role="presentation">
+                     <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-social" aria-controls="navs-pills-justified-social" aria-selected="false" tabindex="-1"><i class="tf-icons bx bxl-messenger me-1"></i> Social</button>
+                   </li>
+                   <li class="nav-item" role="presentation">
+                     <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-others" aria-controls="navs-pills-justified-others" aria-selected="false" tabindex="-1"><i class="tf-icons bx bx-grid-alt me-1"></i> Others</button>
+                   </li>
+                 </ul>
+                 <form method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{form.media}}
+                 <div class="tab-content">
+                   <div class="tab-pane fade active show" id="navs-pills-justified-general" role="tabpanel">
+                     <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.name.id_for_label }}" class="form-label">Application Name</label>
+                                 {{ form.name }}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="card">
+                             <div class="card-body">
+                                <label for="{{ form.author.id_for_label }}" class="form-label">Author</label>
+                                {{ form.author }}
+                             </div>
+                          </div>
+                       </div>
+                     </div>
+                     <div class="row mb-3">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                               <div class="card-body">
+                                  <label for="{{ form.currency_name.id_for_label }}" class="form-label">Currency Name <span class="text-danger">( Must be UPPERCASE )</span></label>
+                                  {{ form.currency_name }}
+                               </div>
+                            </div>
+                         </div>
+                        <div class="col-md-6">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.currency_symbol.id_for_label }}" class="form-label">Currency Symbol</label>
+                                 {{ form.currency_symbol }}
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                           <div class="card">
+                              <div class="card-body">
+                                 <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <label for="{{ form.is_purchasing_enable.id_for_label }}" class="form-label">Enable Purchasing</label>
+                                    </div>
+                                    <div class="col-md-6 d-flex justify-content-end">
+                                        <div class="flex-grow-1 text-end icon-state">
+                                            <label class="switch">
+                                                {{ form.is_purchasing_enable }}
+                                                <span class="switch-toggle-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3">If enabled users or clients can place orders, make payments and can checkout from their dashboard by them self.</p>
+                              </div>
+                           </div>
+                        </div>
+                       <div class="col-md-6">
+                          <div class="card">
+                             <div class="card-body">
+                                 <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                       <label for="{{ form.is_auto_invoice_enable.id_for_label }}" class="form-label">Auto Invoicing</label>
+                                    </div>
+                                    <div class="col-md-6 d-flex justify-content-end">
+                                       <div class="flex-grow-1 text-end icon-state">
+                                          <label class="switch">
+                                                {{ form.is_auto_invoice_enable }}
+                                                <span class="switch-toggle-slider"></span>
+                                          </label>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <p class="mt-3">If enabled when users or clients place an order an automatic Invoice, Project & Payment will be created for them.</p>
+
+                             </div>
+                          </div>
+                       </div>
+
+                        <div class="col-md-12">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.currency_symbol.id_for_label }}" class="form-label">Copyright</label>
+                                 {{ form.footer_copyright }}
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                   </div>
+                   <div class="tab-pane fade" id="navs-pills-justified-logos" role="tabpanel">
+                     <div class="row mb-3">
+                        <div class="col-md-12 mb-3">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.logo.id_for_label }}" class="form-label">Logo</label>
+                                 <br>
+                                 {% if settings.logo %}
+                                        <img class="mb-3" src="{{ settings.logo.url }}" width="200" alt="Current Image">
+                                {% endif %}
+                                <br>
+                                 {{ form.logo }}
+                              </div>
+                           </div>
+                       </div>
+                       <div class="col-md-6 mb-3">
+                        <div class="card">
+                           <div class="card-body">
+                              <label for="{{ form.favicon.id_for_label }}" class="form-label">Favicon</label>
+                              <br>
+                                 {% if settings.favicon %}
+                                        <img class="mb-2" src="{{ settings.favicon.url }}" width="30" alt="Current Image">
+                                {% endif %}
+                                <br>
+                              {{ form.favicon }}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md-6 mb-3">
+                       <div class="card">
+                          <div class="card-body">
+                             <label for="{{ form.invoice_logo.id_for_label }}" class="form-label">Invoice Logo</label>
+                             <br>
+                                {% if settings.invoice_logo %}
+                                       <img class="mb-2" src="{{ settings.invoice_logo.url }}" width="30" alt="Current Image">
+                               {% endif %}
+                               <br>
+                             {{ form.invoice_logo }}
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-md-6">
+                       <div class="card">
+                          <div class="card-body">
+                             <label for="{{ form.logo_width.id_for_label }}" class="form-label">Website Logo Width</label>
+                             {{ form.logo_width }}
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-md-6">
+                       <div class="card">
+                          <div class="card-body">
+                             <label for="{{ form.invoice_logo_width.id_for_label }}" class="form-label">Invoice Logo Width</label>
+                             {{ form.invoice_logo_width }}
+                          </div>
+                       </div>
+                    </div>
+                   </div>
+
+                   </div>
+                   <div class="tab-pane fade" id="navs-pills-justified-contact" role="tabpanel">
+                        <div class="row mb-2">
+                           <div class="col-md-4 mb-3">
+                              <div class="card">
+                                 <div class="card-body">
+                                    <label for="{{ form.email_address.id_for_label }}" class="form-label">Email</label>
+                                    {{ form.email_address }}
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-4 mb-3">
+                              <div class="card">
+                                 <div class="card-body">
+                                    <label for="{{ form.phone_or_whatsapp.id_for_label }}" class="form-label">Phone ( What's App )</label>
+                                    {{ form.phone_or_whatsapp }}
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-4 mb-3">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.price_ragne.id_for_label }}" class="form-label">Price Range</label>
+                                 {{ form.price_ragne }}
+                              </div>
+                           </div>
+                        </div>
+                        </div>
+         
+                        <div class="row mb-3">
+                           <div class="col-md-6 mb-3">
+                              <div class="card">
+                                 <div class="card-body">
+                                    <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                                    {{ form.address }}
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6 mb-3">
+                              <div class="card">
+                                 <div class="card-body">
+                                    <label for="{{ form.state.id_for_label }}" class="form-label">State</label>
+                                    {{ form.state }}
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+         
+                        <div class="row mb-3 mb-3">
+                        <div class="col-md-6 mb-3">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.Zip.id_for_label }}" class="form-label">Postal</label>
+                                 {{ form.Zip }}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
+                                 {{ form.country }}
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                   </div>
+
+                   <div class="tab-pane fade" id="navs-pills-justified-sms" role="tabpanel">
+                     <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.twilio_sid.id_for_label }}" class="form-label">Twilio SID</label>
+                                 {{ form.twilio_sid }}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.twilio_auth_token.id_for_label }}" class="form-label">Auth Token</label>
+                                 {{ form.twilio_auth_token }}
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="card">
+                             <div class="card-body">
+                                <label for="{{ form.twilio_from_number.id_for_label }}" class="form-label">Twilio Number</label>
+                                {{ form.twilio_from_number }}
+                             </div>
+                          </div>
+                       </div>
+                     </div>
+                </div>
+
+                  <div class="tab-pane fade" id="navs-pills-justified-social" role="tabpanel">
+                     <div class="row mb-3">
+                        <div class="col-md-12 mb-3">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.analytics_code.id_for_label }}" class="form-label">Google Analytics Measurement Code</label>
+                                 {{ form.analytics_code }}
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+        
+                     <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                               <div class="card-body">
+                                  <label for="{{ form.facebook_pixel_code.id_for_label }}" class="form-label">Facebook Pixel Code</label>
+                                  {{ form.facebook_pixel_code }}
+                               </div>
+                            </div>
+                         </div>
+                        <div class="col-md-6 mb-3">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.facebook_chat_code.id_for_label }}" class="form-label">Facebook Chat Code</label>
+                                 {{ form.facebook_chat_code }}
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="navs-pills-justified-others" role="tabpanel">
+                     <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <div class="card">
+                               <div class="card-body">
+                                  <label for="{{ form.custom_css.id_for_label }}" class="form-label">Custom CSS</label>
+                                  {{ form.custom_css }}
+                               </div>
+                            </div>
+                         </div>
+                        <div class="col-md-6 mb-3">
+                           <div class="card">
+                              <div class="card-body">
+                                 <label for="{{ form.custom_css.id_for_label }}" class="form-label">Custom JS</label>
+                                 {{ form.custom_js }}
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                   
+                   <button class="btn btn-primary mb-5" type="submit">Save</button>
+                 </div>
+               </form>
+                 
+               </div>
+             </div>
+
+ </div>
+{% endblock content %}

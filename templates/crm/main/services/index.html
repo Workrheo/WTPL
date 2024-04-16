@@ -1,0 +1,136 @@
+{% extends 'crm/base.html' %}
+{% load static %}
+{% block title %}{{title}} - {{settings.name}}{% endblock title %}
+{% block content %}
+<style>
+    .btn-group-sm>.btn-icon.btn, .btn-icon.btn-sm {
+        font-size: 1.2rem !important;
+        height: calc(1.625rem + 2px);
+        width: calc(1.625rem + 2px);
+    }
+@media (min-width: 992px) {
+  .card-datatable.table-responsive {
+    overflow-x: hidden;
+  }
+}
+.dt-buttons.btn-group.flex-wrap {
+    margin-top: -32px;
+}
+</style>
+
+    <!-- Content wrapper -->
+
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h4 class="fw-bold py-3 mb-4">
+                        <span class="text-muted fw-light">CRM /</span> Services
+                    </h4>
+                </div>
+            </div>
+            <div class="content-wrapper">
+                {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <!--Table Card-->
+            <div class="card">
+                <div class="card-datatable table-responsive">
+                  <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <div class="card-header flex-column flex-md-row">
+                      <div class="head-label">
+                        <h5 class="card-title mb-0">All Services</h5>
+                      </div>
+                      <div class="dt-action-buttons text-end pt-3 pt-md-0">
+                        <div class="dt-buttons btn-group flex-wrap">
+                          <a class="btn btn-secondary create-new btn-primary" href="{% url 'serviceCreate' %}" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                            <span><i class="bx bx-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add New Service</span></span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Your button -->
+                    <div class="container mb-4">
+                    <table class="datatables-basic table border-top dataTable no-footer dtr-column collapsed" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                      <thead>
+                        <tr>
+                        <th style="width: 0px;" >#</th>
+                         <th style="width: 130px;" >Name</th>
+                         <th style="width: 150px;">Price</th>
+                         <th style="width: 0px;" class="sorting_disabled dtr-hidden">Actions</th>                           
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for service in services %}
+                            <tr class="odd">
+                                <td>{{ forloop.counter }}</td>
+                                <td><span >{{ service.name }}</span></td>
+                                <td><span>{{ service.price }}</span></td>
+                                <td class="dtr-hidden" style="">
+                                    <a href="{% url 'serviceEdit' service.id %}" class="btn btn-sm btn-icon item-edit">
+                                        <i class="bx bxs-edit"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-icon service-delete" data-slug="{{ service.id }}">
+                                        <i class='bx bxs-x-circle'></i>
+                                    </button>
+                                    <script>
+                                      document.addEventListener('DOMContentLoaded', (event) => {
+                                          var deleteButtons = document.querySelectorAll('.service-delete');
+                                    
+                                          deleteButtons.forEach(function(button) {
+                                              button.addEventListener('click', function (event) {
+                                                  event.preventDefault();
+                                    
+                                                  var url = "{% url 'serviceDelete' service.id %}";
+                                    
+                                                  Swal.fire({
+                                                      title: 'Are you sure?',
+                                                      text: "You won't be able to revert this!",
+                                                      icon: 'warning',
+                                                      showCancelButton: true,
+                                                      confirmButtonColor: '#3085d6',
+                                                      cancelButtonColor: '#d33',
+                                                      confirmButtonText: 'Yes, delete it!'
+                                                  }).then((result) => {
+                                                      if (result.isConfirmed) {
+                                                          window.location.href = url;
+                                                      }
+                                                  })
+                                              });
+                                          });
+                                      });
+                                    </script>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <!-- ... more table rows ... -->
+                      </tbody>
+                      
+                    </table>
+                </div>
+                  
+              </div> <!--Table Card-->         
+
+          </div>
+        </div>
+        <!-- / Content -->
+
+
+    </div>
+    <!-- Content wrapper -->
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                pageLength: 10, // Set the initial page length to 10
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]], // Allow changing page length
+                info: true, // Show the item count
+                search: true // Enable search
+            });
+        });
+    </script>
+{% endblock content %}

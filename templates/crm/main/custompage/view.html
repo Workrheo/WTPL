@@ -1,0 +1,35 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block title %}{{page.title}} - {{settings.name}}{% endblock title %}
+{% block content %}
+<style>
+  .btn-group-sm>.btn-icon.btn, .btn-icon.btn-sm {
+    font-size: 1.2rem !important;
+    height: calc(1.625rem + 2px);
+    width: calc(1.625rem + 2px);
+}
+@media (min-width: 992px) {
+.card-datatable.table-responsive {
+overflow-x: hidden;
+}
+}
+.dt-buttons.btn-group.flex-wrap {
+margin-top: -32px;
+}
+</style>
+<div class="content-wrapper">
+    <div class="container">
+        <div class="card mt-3 mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{page.content|safe}}
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+
+
+{% endblock content %}
